@@ -24,7 +24,7 @@ RSpec.describe SurvivorsController, type: :controller do
   # Survivor. As you add validations to Survivor, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {name: "Jonh", age: 24, gender: "female", location: ["35354", "5353"], is_infected: false}
+    {name: "Jonh", age: 24, gender: "female", is_infected: false}
   }
 
   let(:invalid_attributes) {
