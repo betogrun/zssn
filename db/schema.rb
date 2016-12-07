@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207003837) do
+ActiveRecord::Schema.define(version: 20161207155917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "items", force: :cascade do |t|
+    t.integer  "amount"
+    t.integer  "type"
+    t.integer  "survivor_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["survivor_id"], name: "index_items_on_survivor_id", using: :btree
+  end
 
   create_table "locations", force: :cascade do |t|
     t.string   "lat"
@@ -34,5 +43,6 @@ ActiveRecord::Schema.define(version: 20161207003837) do
     t.datetime "updated_at",  null: false
   end
 
+  add_foreign_key "items", "survivors"
   add_foreign_key "locations", "survivors"
 end
