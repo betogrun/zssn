@@ -10,7 +10,7 @@ class SurvivorsController < ApplicationController
 
   # GET /survivors/1
   def show
-    render json: @survivor, :except => [:created_at, :updated_at]
+    render json: @survivor, :include => {:location => {:only => [:lat, :lon]}}, :except => [:created_at, :updated_at]
   end
 
   # POST /survivors
