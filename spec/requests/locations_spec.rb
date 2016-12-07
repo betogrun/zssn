@@ -12,7 +12,7 @@ RSpec.describe "Locations", type: :request do
 
   describe "PUT /survivor/:id/location" do
     let(:old_location) { FactoryGirl.create(:location, survivor_id: survivor.id)}
-    let(:attributes) {{:lat => "-22.017245", :lon => "-47.915900", :survivor_id => survivor.id}}
+    let(:attributes) {{:lat => "-22.017245", :lon => "-47.915900"}}
     let(:params) {{format: :json, location: attributes}}
 
     it "update the location of a given survivor" do
