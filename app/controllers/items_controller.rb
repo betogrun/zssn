@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
+  before_action :load_survivor, only [:create, :update, :destroy]
+  before_action :check_survivor_infection, only [:create, :update, :destroy]
 
   # GET /items
   def index
@@ -48,6 +50,10 @@ class ItemsController < ApplicationController
       @item = Item.find(params[:id])
     end
 
+    def load_survivor
+      @survivor = Survivor.find_by_id(item_params[:survivor_id])
+    end
+
     # Only allow a trusted parameter "white list" through.
     def item_params
       params.require(:item).permit(:amount, :kind, :survivor_id)
@@ -55,5 +61,11 @@ class ItemsController < ApplicationController
 
     def kind_already_created
       Item.find_by(survivor_id: item_params[:survivor_id]).kind == item_params[:kind] if Item.exists?(survivor_id: item_params[:survivor_id])
+    end
+
+    def check_survivor_infection
+      if @survivor.is_infected
+        render json: "#{@survivor.name} is a zombie, it is not allowed to use the inventory"
+      end
     end
 end
