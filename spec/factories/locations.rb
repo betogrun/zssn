@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :location do
-    lat "MyString"
-    lon "MyString"
-    survivor nil
+    lat "-22.005773"
+    lon "-47.904264"
+    survivor 0
   end
 end

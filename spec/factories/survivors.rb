@@ -1,10 +1,9 @@
 FactoryGirl.define do
   factory :survivor do
-    name "MyString"
-    age ""
-    gender ""
-    location ""
+    name "Jonh Doe"
+    age 35
+    gender "male"
     is_infected false
-    complaints ""
+    complaints 5
   end
 end
