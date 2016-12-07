@@ -15,12 +15,16 @@ class ItemsController < ApplicationController
 
   # POST /items
   def create
-    @item = Item.new(item_params)
 
-    if @item.save
-      render json: @item, status: :created
+    if(kind_already_created)
+      render status: :unprocessable_entity, json: { error: "Item with kind #{params[:kind]} already exists" }
     else
-      render json: @item.errors, status: :unprocessable_entity
+      @item = Item.new(item_params)
+      if @item.save
+        render json: @item, status: :created
+      else
+        render json: @item.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -47,5 +51,9 @@ class ItemsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def item_params
       params.require(:item).permit(:amount, :kind, :survivor_id)
+    end
+
+    def kind_already_created
+      Item.find_by(survivor_id: item_params[:survivor_id]).kind == item_params[:kind] if Item.exists?(survivor_id: item_params[:survivor_id])
     end
 end
