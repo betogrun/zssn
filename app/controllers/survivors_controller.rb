@@ -5,12 +5,12 @@ class SurvivorsController < ApplicationController
   def index
     @survivors = Survivor.all
 
-    render json: @survivors
+    render json: @survivors, :except => [:created_at, :updated_at]
   end
 
   # GET /survivors/1
   def show
-    render json: @survivor
+    render json: @survivor, :except => [:created_at, :updated_at]
   end
 
   # POST /survivors

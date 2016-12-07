@@ -44,6 +44,7 @@ RSpec.describe SurvivorsController, type: :controller do
     end
   end
 
+=begin
   describe "GET #show" do
     it "assigns the requested survivor as @survivor" do
       survivor = Survivor.create! valid_attributes
@@ -66,6 +67,7 @@ RSpec.describe SurvivorsController, type: :controller do
       expect(assigns(:survivor)).to eq(survivor)
     end
   end
+=end
 
   describe "POST #create" do
     context "with valid params" do
