@@ -5,7 +5,6 @@ RSpec.describe "Locations", type: :request do
 
   describe "GET /survivor/:id/location" do
     it "show the last location of a given survivor" do
-      #survivor = FactoryGirl.create(:survivor)
       get "/survivors/#{survivor.id}/locations"
       expect(response).to have_http_status(200)
     end
