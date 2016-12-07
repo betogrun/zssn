@@ -52,11 +52,8 @@ RSpec.describe "Items", type: :request do
   describe "DELETE /survivor/survivor:id/item:id" do
     let(:item) { FactoryGirl.create(:item, amount: 2, kind: :medicine, survivor_id: survivor.id)}
     it "destroy a item of a given survivor" do
-
       delete "/survivors/#{survivor.id}/items/#{item.id}"
       expect(response.status).to eq 204
     end
   end
-
-
 end

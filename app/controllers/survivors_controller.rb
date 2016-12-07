@@ -5,12 +5,14 @@ class SurvivorsController < ApplicationController
   def index
     @survivors = Survivor.all
 
-    render json: @survivors, :include => {:location => {:only => [:lat, :lon]}}, :except => [:created_at, :updated_at]
+    render json: @survivors, :include => {:location => {:only => [:lat, :lon]},
+                                        :items => {:only => [:amount, :kind]}}, :except => [:created_at, :updated_at]
   end
 
   # GET /survivors/1
   def show
-    render json: @survivor, :include => {:location => {:only => [:lat, :lon]}}, :except => [:created_at, :updated_at]
+    render json: @survivor, :include => {:location => {:only => [:lat, :lon]},
+                                        :items => {:only => [:amount, :kind]}}, :except => [:created_at, :updated_at]
   end
 
   # POST /survivors
