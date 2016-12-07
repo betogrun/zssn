@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe "Locations", type: :request do
   let(:survivor) { FactoryGirl.create(:survivor)}
 
-  describe "GET /survivor/:id/location" do
+  describe "GET /survivor/survivor:id/location" do
     it "show the last location of a given survivor" do
       get "/survivors/#{survivor.id}/locations"
       expect(response).to have_http_status(200)
     end
   end
 
-  describe "PUT /survivor/:id/location" do
+  describe "PUT /survivor/survivor:id/location:id" do
     let(:old_location) { FactoryGirl.create(:location, survivor_id: survivor.id)}
     let(:attributes) {{:lat => "-22.017245", :lon => "-47.915900"}}
     let(:params) {{format: :json, location: attributes}}

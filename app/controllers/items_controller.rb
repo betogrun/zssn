@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      render json: @item, status: :created, location: @item
+      render json: @item, status: :created
     else
       render json: @item.errors, status: :unprocessable_entity
     end
@@ -46,6 +46,6 @@ class ItemsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(:item).permit(:amount, :type, :survivor_id)
+      params.require(:item).permit(:amount, :kind, :survivor_id)
     end
 end
