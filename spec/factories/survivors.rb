@@ -4,6 +4,7 @@ FactoryGirl.define do
     age 35
     gender "male"
     is_infected false
-    complaints 5
+    complaints 0
   end
+
 end
