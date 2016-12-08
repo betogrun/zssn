@@ -62,9 +62,12 @@ class SurvivorsController < ApplicationController
     end
 
     def create_indicment
-      @accuser = Survivor.find(indicment_params[:accuser_id])
-      @indicted = Survivor.find(indicment_params[:indicted_id])
-      @accuser.create_indicment(@indicted)
-      @accuser.indicteds << @indicted
+      accuser = Survivor.find(indicment_params[:accuser_id])
+      indicted = Survivor.find(indicment_params[:indicted_id])
+      indicted.increment_complaints
+      accuser.indicteds << indicted
+      indicted.accusers << accusers
+      accuser.save
+      indicted.save
     end
 end
