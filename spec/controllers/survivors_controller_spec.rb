@@ -24,11 +24,11 @@ RSpec.describe SurvivorsController, type: :controller do
   # Survivor. As you add validations to Survivor, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {name: "Jonh", age: 24, gender: "female", is_infected: false}
+    {name: "Jonh", age: 24, gender: :male, is_infected: false, complaints: 2}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name: "", age: 0, gender: :male, is_infected: false, complaints: 2}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -44,31 +44,6 @@ RSpec.describe SurvivorsController, type: :controller do
     end
   end
 
-=begin
-  describe "GET #show" do
-    it "assigns the requested survivor as @survivor" do
-      survivor = Survivor.create! valid_attributes
-      get :show, params: {id: survivor.to_param}, session: valid_session
-      expect(assigns(:survivor)).to eq(survivor)
-    end
-  end
-
-  describe "GET #new" do
-    it "assigns a new survivor as @survivor" do
-      get :new, params: {}, session: valid_session
-      expect(assigns(:survivor)).to be_a_new(Survivor)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested survivor as @survivor" do
-      survivor = Survivor.create! valid_attributes
-      get :edit, params: {id: survivor.to_param}, session: valid_session
-      expect(assigns(:survivor)).to eq(survivor)
-    end
-  end
-=end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Survivor" do
@@ -82,80 +57,9 @@ RSpec.describe SurvivorsController, type: :controller do
         expect(assigns(:survivor)).to be_a(Survivor)
         expect(assigns(:survivor)).to be_persisted
       end
-
-      it "redirects to the created survivor" do
-        post :create, params: {survivor: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Survivor.last)
-      end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved survivor as @survivor" do
-        post :create, params: {survivor: invalid_attributes}, session: valid_session
-        expect(assigns(:survivor)).to be_a_new(Survivor)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, params: {survivor: invalid_attributes}, session: valid_session
-        expect(response).to render_template("new")
-      end
-    end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested survivor" do
-        survivor = Survivor.create! valid_attributes
-        put :update, params: {id: survivor.to_param, survivor: new_attributes}, session: valid_session
-        survivor.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "assigns the requested survivor as @survivor" do
-        survivor = Survivor.create! valid_attributes
-        put :update, params: {id: survivor.to_param, survivor: valid_attributes}, session: valid_session
-        expect(assigns(:survivor)).to eq(survivor)
-      end
-
-      it "redirects to the survivor" do
-        survivor = Survivor.create! valid_attributes
-        put :update, params: {id: survivor.to_param, survivor: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(survivor)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the survivor as @survivor" do
-        survivor = Survivor.create! valid_attributes
-        put :update, params: {id: survivor.to_param, survivor: invalid_attributes}, session: valid_session
-        expect(assigns(:survivor)).to eq(survivor)
-      end
-
-      it "re-renders the 'edit' template" do
-        survivor = Survivor.create! valid_attributes
-        put :update, params: {id: survivor.to_param, survivor: invalid_attributes}, session: valid_session
-        expect(response).to render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested survivor" do
-      survivor = Survivor.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: survivor.to_param}, session: valid_session
-      }.to change(Survivor, :count).by(-1)
-    end
-
-    it "redirects to the survivors list" do
-      survivor = Survivor.create! valid_attributes
-      delete :destroy, params: {id: survivor.to_param}, session: valid_session
-      expect(response).to redirect_to(survivors_url)
-    end
-  end
 
 end
