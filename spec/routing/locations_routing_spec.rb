@@ -4,35 +4,25 @@ RSpec.describe LocationsController, type: :routing do
   describe "routing" do
 
     it "routes to #index" do
-      expect(:get => "/locations").to route_to("locations#index")
+      expect(:get => "/survivors/1/locations").to route_to("locations#index", :survivor_id => "1" )
     end
 
-    it "routes to #new" do
-      expect(:get => "/locations/new").to route_to("locations#new")
-    end
 
     it "routes to #show" do
-      expect(:get => "/locations/1").to route_to("locations#show", :id => "1")
+      expect(:get => "survivors/1/locations/1").to route_to("locations#show", :id => "1", :survivor_id => "1" )
     end
 
-    it "routes to #edit" do
-      expect(:get => "/locations/1/edit").to route_to("locations#edit", :id => "1")
-    end
 
     it "routes to #create" do
-      expect(:post => "/locations").to route_to("locations#create")
+      expect(:post => "survivors/1/locations").to route_to("locations#create", :survivor_id => "1" )
     end
 
     it "routes to #update via PUT" do
-      expect(:put => "/locations/1").to route_to("locations#update", :id => "1")
-    end
-
-    it "routes to #update via PATCH" do
-      expect(:patch => "/locations/1").to route_to("locations#update", :id => "1")
+      expect(:put => "survivors/1/locations/1").to route_to("locations#update", :id => "1", :survivor_id => "1" )
     end
 
     it "routes to #destroy" do
-      expect(:delete => "/locations/1").to route_to("locations#destroy", :id => "1")
+      expect(:delete => "survivors/1/locations/1").to route_to("locations#destroy", :id => "1", :survivor_id => "1" )
     end
 
   end
