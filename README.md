@@ -1,24 +1,34 @@
-# README
+# ZSSN
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails API to store information about survivors and resources during the zombie apocalipse.
+I hope this nevers happens...
 
-Things you may want to cover:
+## Ruby version
 
-* Ruby version
+Running on 2.3.3.
 
-* System dependencies
+## System dependencies
 
-* Configuration
+Any *nix platform.
 
-* Database creation
+You can run our app on docker too.
+```
+docker-compose build
+docker-compose up
+```
 
-* Database initialization
+## Setup
 
-* How to run the test suite
+Run in the machine:
+```
+bin/setup
+```
+or with docker:
+```
+docker-compose run web bin/setup
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+to make the database creation, database migration and the database initialization.
 
-* Deployment instructions
-
-* ...
+## How to run the test suite
+`rspec spec/`
