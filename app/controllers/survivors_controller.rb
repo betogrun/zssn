@@ -17,12 +17,15 @@ class SurvivorsController < ApplicationController
 
   # POST /survivors
   def create
-    @survivor = Survivor.new(survivor_params)
-
-    if @survivor.save
-      render json: @survivor, status: :created, location: @survivor
+    if is_indicment_operation?
+      create_indicment
     else
-      render json: @survivor.errors, status: :unprocessable_entity
+      @survivor = Survivor.new(survivor_params)
+      if @survivor.save
+        render json: @survivor, status: :created, location: @survivor
+      else
+        render json: @survivor.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -45,9 +48,23 @@ class SurvivorsController < ApplicationController
     def set_survivor
       @survivor = Survivor.find(params[:id])
     end
-
     # Only allow a trusted parameter "white list" through.
     def survivor_params
       params.require(:survivor).permit(:name, :age, :gender, :is_infected, :complaints)
+    end
+
+    def indicment_params
+      params.permit(:operation, :accuser_id, :indicted_id)
+    end
+
+    def is_indicment_operation?
+      params[:operation].present? && params[:operation] == "indict"
+    end
+
+    def create_indicment
+      @accuser = Survivor.find(indicment_params[:accuser_id])
+      @indicted = Survivor.find(indicment_params[:indicted_id])
+      @accuser.create_indicment(@indicted)
+      @accuser.indicteds << @indicted
     end
 end
