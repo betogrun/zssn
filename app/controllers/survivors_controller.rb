@@ -64,7 +64,7 @@ class SurvivorsController < ApplicationController
     def create_indicment
       accuser = Survivor.find(indicment_params[:accuser_id])
       indicted = Survivor.find(indicment_params[:indicted_id])
-      indicted.increment_complaints
+      accuser.increment_complaints indicted
       accuser.indicteds << indicted
       indicted.accusers << accusers
       accuser.save
