@@ -1,7 +1,25 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+survivors_list = [
+  ["Jonh", 45, :male, false, 0],
+  ["Paul", 43, :male, false, 2],
+  ["George", 53, :male, false, 0],
+  ["Peter", 11, :male, false, 2],
+  ["Harry", 53, :male, true, 0],
+  ["Antony", 25, :male, false, 0],
+  ["Steve", 44, :male, true, 2],
+  ["Ringo", 23, :male, false, 0],
+  ["Julia", 31, :female, false, 1],
+  ["Robert", 89, :male, true, 3],
+  ["Helen", 22, :female, false, 0]
+]
+survivors = []
+survivors_list.each do |name, age, gender, is_infected, complaints|
+  survivors << Survivor.create(name: name, age: age, gender: gender, is_infected: is_infected, complaints: complaints)
+end
+
+survivors.each do |survivor|
+  Location.create(lat: "-22.005773" , lon: "-47.904264" , survivor: survivor)
+  Item.create(amount: rand(1..100), kind: :water, survivor: survivor)
+  Item.create(amount: rand(1..100), kind: :food, survivor: survivor)
+  Item.create(amount: rand(1..100), kind: :medicine, survivor: survivor)
+  Item.create(amount: rand(1..100), kind: :ammo, survivor: survivor)
+end
