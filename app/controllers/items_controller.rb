@@ -59,10 +59,6 @@ class ItemsController < ApplicationController
     end
 
     def check_survivor_infection
-      puts "survivor: #{@item.survivor.name}"
-      puts "survivor_id: #{@item.survivor_id}"
-      puts  @item.survivor.is_infected
-
       if @item.survivor.is_infected
         render status: :unprocessable_entity, json: { message: "#{@item.survivor.name} is a zombie, it is not allowed to use the inventory" }
       end

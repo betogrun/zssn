@@ -58,7 +58,6 @@ RSpec.describe "Items", type: :request do
 
     context "when the survivor is a zombie" do
       let(:zombie) { FactoryGirl.create(:survivor, id: 1, name: "Paul", age: 35, gender: :male, is_infected: true, complaints: 2)}
-
       let(:zombie_item) { FactoryGirl.create(:item, amount: 10, kind: :ammo, survivor_id: zombie.id)}
       let(:attributes) {{:amount => 15, :kind => :ammo, :survivor_id => zombie.id}}
       let(:params) {{format: :json, item: attributes}}
@@ -69,14 +68,23 @@ RSpec.describe "Items", type: :request do
     end
 
   end
-=begin
+
   describe "DELETE /survivor/survivor:id/item:id" do
-    let(:item) { FactoryGirl.create(:item, amount: 2, kind: :medicine, survivor_id: survivor.id)}
-    it "destroy a item of a given survivor" do
-      delete "/survivors/#{survivor.id}/items/#{item.id}"
-      expect(response.status).to eq 204
+    context "with valid attributes" do
+      let(:item) { FactoryGirl.create(:item, amount: 2, kind: :medicine, survivor_id: survivor.id)}
+      it "destroy a item of a given survivor" do
+        delete "/survivors/#{survivor.id}/items/#{item.id}"
+        expect(response.status).to eq 204
+      end
     end
 
+    context "when the survivor is a zombie" do
+      let(:zombie) { FactoryGirl.create(:survivor, id: 1, name: "Paul", age: 35, gender: :male, is_infected: true, complaints: 2)}
+      let(:zombie_item) { FactoryGirl.create(:item, amount: 10, kind: :ammo, survivor_id: zombie.id)}
+      it "does not allow to destroy a item" do
+        delete "/survivors/#{zombie.id}/items/#{zombie_item.id}"
+        expect(response.status).to eq 422
+      end
+    end
   end
-=end
 end
