@@ -18,7 +18,7 @@ class DenouncementsController < ApplicationController
     @denouncement = Denouncement.first_or_initialize(denouncement_params)
 
     if @denouncement.save
-      render json: @denouncement, status: :created, location: @denouncement
+      render json: @denouncement, status: :created
     else
       render json: @denouncement.errors, status: :unprocessable_entity
     end
