@@ -17,30 +17,12 @@ class SurvivorsController < ApplicationController
 
   # POST /survivors
   def create
-    if is_indicment_operation?
-      create_indicment
-    else
-      @survivor = Survivor.new(survivor_params)
-      if @survivor.save
-        render json: @survivor, status: :created, location: @survivor
-      else
-        render json: @survivor.errors, status: :unprocessable_entity
-      end
-    end
-  end
-
-  # PATCH/PUT /survivors/1
-  def update
-    if @survivor.update(survivor_params)
-      render json: @survivor
+    @survivor = Survivor.new(survivor_params)
+    if @survivor.save
+      render json: @survivor, status: :created, location: @survivor
     else
       render json: @survivor.errors, status: :unprocessable_entity
     end
-  end
-
-  # DELETE /survivors/1
-  def destroy
-    @survivor.destroy
   end
 
   private
@@ -53,21 +35,4 @@ class SurvivorsController < ApplicationController
       params.require(:survivor).permit(:name, :age, :gender, :is_infected, :complaints)
     end
 
-    def indicment_params
-      params.permit(:operation, :accuser_id, :indicted_id)
-    end
-
-    def is_indicment_operation?
-      params[:operation].present? && params[:operation] == "indict"
-    end
-
-    def create_indicment
-      accuser = Survivor.find(indicment_params[:accuser_id])
-      indicted = Survivor.find(indicment_params[:indicted_id])
-      accuser.increment_complaints indicted
-      accuser.indicteds << indicted
-      indicted.accusers << accusers
-      accuser.save
-      indicted.save
-    end
 end
