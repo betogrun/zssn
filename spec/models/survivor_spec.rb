@@ -7,6 +7,6 @@ RSpec.describe Survivor, type: :model do
       denounced.increment_complaints
       denounced.save
       expect(denounced.is_infected).to be true
-  end
+    end
   end
 end
