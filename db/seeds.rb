@@ -17,7 +17,7 @@ survivors_list.each do |name, age, gender, is_infected, complaints|
 end
 
 survivors.each do |survivor|
-  Location.create(lat: "-22.005773" , lon: "-47.904264" , survivor: survivor)
+  Location.create(lat: rand(-90.0..90.0).round(6).to_s , lon: rand(-180.0..180.0).round(6).to_s , survivor: survivor)
   Item.create(amount: rand(1..100), kind: :water, survivor: survivor)
   Item.create(amount: rand(1..100), kind: :food, survivor: survivor)
   Item.create(amount: rand(1..100), kind: :medicine, survivor: survivor)
