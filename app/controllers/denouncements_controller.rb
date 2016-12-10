@@ -15,27 +15,13 @@ class DenouncementsController < ApplicationController
 
   # POST /denouncements
   def create
-    @denouncement = Denouncement.new(denouncement_params)
+    @denouncement = Denouncement.first_or_initialize(denouncement_params)
 
     if @denouncement.save
       render json: @denouncement, status: :created, location: @denouncement
     else
       render json: @denouncement.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /denouncements/1
-  def update
-    if @denouncement.update(denouncement_params)
-      render json: @denouncement
-    else
-      render json: @denouncement.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /denouncements/1
-  def destroy
-    @denouncement.destroy
   end
 
   private
