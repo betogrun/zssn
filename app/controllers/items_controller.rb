@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
-  before_action :check_survivor_infection, only: [:update, :destroy]
+  before_action :avoid_zombie_access, only: [:update, :destroy]
+  before_action :avoid_item_duplication, only: :create
 
   # GET /items
   def index
@@ -16,15 +17,11 @@ class ItemsController < ApplicationController
 
   # POST /items
   def create
-    if(kind_already_created)
-      render status: :unprocessable_entity, json: { error: "Item with kind #{params[:kind]} already exists" }
+    @item = Item.new(item_params)
+    if @item.save
+      render json: @item, status: :created
     else
-      @item = Item.new(item_params)
-      if @item.save
-        render json: @item, status: :created
-      else
-        render json: @item.errors, status: :unprocessable_entity
-      end
+      render json: @item.errors, status: :unprocessable_entity
     end
   end
 
@@ -53,14 +50,15 @@ class ItemsController < ApplicationController
       params.require(:item).permit(:amount, :kind, :survivor_id)
     end
 
-    def kind_already_created
-      Item.exists?(survivor_id: item_params[:survivor_id]) &&
-      Item.find_by(survivor_id: item_params[:survivor_id]).kind == item_params[:kind]
-    end
-
-    def check_survivor_infection
+    def avoid_zombie_access
       if @item.survivor.is_infected
         render status: :unprocessable_entity, json: { message: "#{@item.survivor.name} is a zombie, it is not allowed to use the inventory" }
+      end
+    end
+
+    def avoid_item_duplication
+      if Item.where(kind: item_params['kind'], survivor_id: item_params['survivor_id']).first_or_initialize.id?
+        render json: { message: "item whose kind is #{item_params['kind']} already exists" }, status: :unprocessable_entity
       end
     end
 end
