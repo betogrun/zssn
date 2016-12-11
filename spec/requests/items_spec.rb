@@ -7,7 +7,7 @@ RSpec.describe "Items", type: :request do
   let(:params) {{format: :json, item: attributes}}
   let(:zombie) { FactoryGirl.create(:survivor, is_infected: true)}
   let(:zombie_item) { FactoryGirl.create(:item, amount: 10, kind: :ammo, survivor_id: zombie.id)}
-
+  let(:block_message) {"#{zombie.name} is a zombie, it is not allowed to use the inventory"}
 
   describe "GET /survivors/survivor:id/items" do
     it "show the items that belongs to a survivor" do
@@ -21,7 +21,7 @@ RSpec.describe "Items", type: :request do
     context "with valid attributes" do
       it "creates the item" do
         post "/survivors/#{survivor.id}/items", params
-        expect(response.status).to eq 201
+        expect(response).to have_http_status(201)
 
         body = JSON.parse(response.body)
         expect(body['amount']).to eq 15
@@ -34,7 +34,7 @@ RSpec.describe "Items", type: :request do
       it "does not allow to create a item" do
         FactoryGirl.create(:item, amount: 10, kind: :ammo, survivor_id: survivor.id)
         post "/survivors/#{survivor.id}/items", params
-        expect(response.status).to eq 422
+        expect(response).to have_http_status(422)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe "Items", type: :request do
       let(:params) {{format: :json, item: attributes}}
       it "update the item of a given survivor" do
         put "/survivors/#{survivor.id}/items/#{item.id}", params
-        expect(response.status).to eq 200
+        expect(response).to have_http_status(200)
 
         body = JSON.parse(response.body)
         expect(body['amount']).to eq 15
@@ -58,7 +58,10 @@ RSpec.describe "Items", type: :request do
     context "when the survivor is a zombie" do
       it "does not allow to update a item" do
         put "/survivors/#{zombie.id}/items/#{zombie_item.id}", params
-        expect(response.status).to eq 422
+        expect(response).to have_http_status(422)
+
+        body = JSON.parse(response.body)
+        expect(body['message']).to eq block_message
       end
     end
 
@@ -68,14 +71,17 @@ RSpec.describe "Items", type: :request do
     context "with valid attributes" do
       it "destroy a item of a given survivor" do
         delete "/survivors/#{survivor.id}/items/#{item.id}"
-        expect(response.status).to eq 204
+        expect(response).to have_http_status(204)
       end
     end
 
     context "when the survivor is a zombie" do
       it "does not allow to destroy a item" do
         delete "/survivors/#{zombie.id}/items/#{zombie_item.id}"
-        expect(response.status).to eq 422
+        expect(response).to have_http_status(422)
+
+        body = JSON.parse(response.body)
+        expect(body['message']).to eq block_message
       end
     end
   end

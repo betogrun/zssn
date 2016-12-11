@@ -1,7 +1,9 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
-  before_action :avoid_zombie_access, only: [:update, :destroy]
+  #before_action :avoid_zombie_access, only: [:update, :destroy]
   before_action :avoid_item_duplication, only: :create
+
+  include ZombieAccessBlocker
 
   # GET /items
   def index
@@ -50,11 +52,7 @@ class ItemsController < ApplicationController
       params.require(:item).permit(:amount, :kind, :survivor_id)
     end
 
-    def avoid_zombie_access
-      if @item.survivor.is_infected
-        render status: :unprocessable_entity, json: { message: "#{@item.survivor.name} is a zombie, it is not allowed to use the inventory" }
-      end
-    end
+
 
     def avoid_item_duplication
       if Item.where(kind: item_params['kind'], survivor_id: item_params['survivor_id']).first_or_initialize.id?

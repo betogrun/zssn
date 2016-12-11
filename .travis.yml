@@ -2,19 +2,3 @@ language: ruby
 rvm:
 - 2.3.3
 - 2.2.4
-bundler_args: "--jobs=2"
-script:
-- rails db:setup
-- spec
-cache: bundler
-services:
-- postgresql
-addons:
-  postgresql: '9.4'
-deploy:
-  provider: heroku
-  api_key:
-    secure: RL5KFzSuO8chkyKqekZn7l+3iRih1w10Bho6DsxGrmGeSaTK2IsZ1OSZkH1QRKvGclrcFShdEp+5FPKXs9g1eWVhJXoiE0u932ECLEZzWwjvinZE/MRiVYak0EvMwj4WCXDFhzQxqMzS2hos0gWHE7sZxu0x/2k0E28lOy/3zJ0De/uNzTuSWhnCTt7X4Lb/uS568W9str9DQU51ioRDkMTl/2R0/51P/UeB2WcF5hsQzYh1tHqsRQrTQJjcj5WqJ/o0yYML9EYeP4Ly6Nk73jTRf/ImKBeKDReyC4ZjmySaYuEs7kJt0h4JXtSUTPKBzG0bXjUVcadLIH8D98oWEivYhx2kiV+zEMjgn6/qLOh2l9C9sQNiyZsvOq4MAngeE1biWW8ZqWjt/KhUgnLdJV3rruLr1wVyMpNTTuryvyrkixwcCWLpVYbaUu9FIW3GC1P/Oaz4j4vcTGi5NwRTj5j1ellTGy83n2fCK0sQPePbMKFGMGiLzqurhEqmBWIPcwCnq/bLM1+IcLi0L/B4tLpcWD4ww8h9siMRqBg1B+g8JlOJB51UD3KS4iLyxNwfV4lNfC0xuE02byA/GgyBnBao0zQe/f3OKGVYje2Kd4P/8ejK06xsKCVF12+gG+jdTrJNqqrvjAUa5BDSzZGMgeoII+QzCMA66tvecXHU3B8=
-  app: blooming-tundra-90182
-  on:
-    repo: betogrun/zssn
