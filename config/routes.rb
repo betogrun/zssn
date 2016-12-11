@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :barters
   resources :survivors, except: [:update, :destroy] do
       resources :locations
       resources :items
