@@ -5,7 +5,9 @@ class Denouncement < ApplicationRecord
   before_save :increment_complaints_counter
 
   def increment_complaints_counter
-    denounced.increment_complaints
-    denounced.save
+    unless Denouncement.find_by(denounced_id: denounced.id)    
+      denounced.increment_complaints
+      denounced.save
+    end
   end
 end

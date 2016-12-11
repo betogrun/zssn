@@ -5,20 +5,20 @@ class DenouncementsController < ApplicationController
   def index
     @denouncements = Denouncement.all
 
-    render json: @denouncements
+    render json: @denouncements, :include =>  :denounced
   end
 
   # GET /denouncements/1
   def show
-    render json: @denouncement
+    render json: @denouncement, :include => :denounced
   end
 
   # POST /denouncements
   def create
-    @denouncement = Denouncement.first_or_initialize(denouncement_params)
+    @denouncement = Denouncement.new(denouncement_params)
 
     if @denouncement.save
-      render json: @denouncement, status: :created
+      render json: @denouncement, status: :created, :include => :denounced
     else
       render json: @denouncement.errors, status: :unprocessable_entity
     end
