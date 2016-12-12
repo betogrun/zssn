@@ -31,7 +31,12 @@ RSpec.describe "Barters", type: :request do
         body = JSON.parse(response.body)
         expect(items_survivor_a[0].amount) == 5
         expect(items_survivor_a[1].amount) == 5
-
+        expect(items_survivor_a[2].amount) == 7
+        expect(items_survivor_a[3].amount) == 3
+        expect(items_survivor_b[0].amount) == 4
+        expect(items_survivor_b[1].amount) == 6
+        expect(items_survivor_b[2].amount) == 12
+        expect(items_survivor_b[3].amount) == 3
 
       end
     end
