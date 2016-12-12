@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/betogrun/zssn.svg?branch=master)](https://travis-ci.org/betogrun/zssn)
-
 # ZSSN
 
 Rails API to store information about survivors and resources during the zombie apocalipse.
