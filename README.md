@@ -15,6 +15,7 @@ You can run our app on docker too.
 ```
 docker-compose build
 docker-compose up
+
 ```
 
 ## Setup
